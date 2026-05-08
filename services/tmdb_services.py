@@ -2,6 +2,7 @@ import requests
 import os
 import time
 import pandas as pd
+from tqdm import tqdm
 
 from dotenv import load_dotenv
 
@@ -15,6 +16,18 @@ HEADERS = {
 
 BASE_URL = "https://api.themoviedb.org/3"
 
+def get_movie_details(movie_id):
+    try:
+        url = f"{BASE_URL}/movie/{movie_id}"
+        response = requests.get(url, headers= HEADERS, timeout=10)
+        
+        response.raise_for_status()
+        
+        data = response.json()
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return None
 
 def get_movies_page(page):
 
@@ -40,14 +53,11 @@ def get_movies_page(page):
 
         return []
 
-
-def get_all_movies(total_pages=500):
+def get_all_movies(total_pages=1):
 
     all_movies = []
 
-    for page in range(1, total_pages + 1):
-
-        print(f"Extrayendo página {page}")
+    for page in tqdm(range(1, total_pages + 1), desc="Extrayendo películas"):
 
         movies = get_movies_page(page)
 
@@ -60,8 +70,9 @@ def get_all_movies(total_pages=500):
     return df
 
 def get_movies_categories():
-    url = f"{BASE_URL}/genre/movie/list?language=en"
     
+    url = f"{BASE_URL}/genre/movie/list?language=en"
+
     try:
         response = requests.get(url, headers=HEADERS, timeout=10)
         
@@ -73,4 +84,17 @@ def get_movies_categories():
     
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
+        return None
+
+def get_movie_credits(movie_id):
+    try:
+        url = f"{BASE_URL}/movie/{movie_id}/credits"
+        response = requests.get(url, headers=HEADERS, timeout=10)
+        
+        response.raise_for_status()
+        
+        data = response.json()
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"Error al obtener creditos de la pelicula: {e}")
         return None
