@@ -5,6 +5,7 @@ from ui.filters import selectbox_categories, slide_years, multiselect_languages,
 from services.movies_service import get_movies_by_filter, count_movies_by_filter
 from ui.movie_container import movie_container
 from ui.footer import page_footer
+from ui.page_bottoms import page_bottoms
 import math
 
 df_movies = get_movies()
@@ -37,19 +38,7 @@ if categoria_seleccionada:
     if not df_movies.empty:
         movie_container(df_movies)
     
-    col_prev, col_center, col_next = st.columns([1, 5, 1])
-    with col_prev:
-        if st.button("Anterior") and st.session_state.page > 1:
-            st.session_state.page -= 1
-            st.rerun()
-    
-    with col_center:
-        st.markdown(f"<div style='text-align:center; font-size:18px;'>Página {st.session_state.page} de {total_pages}</div>", unsafe_allow_html=True)
-    
-    with col_next:
-        if st.button("Siguiente", disabled=st.session_state.page >= total_pages):
-            st.session_state.page += 1
-            st.rerun()
+    page_bottoms(total_pages)
     
     page_footer()
 
