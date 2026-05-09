@@ -42,12 +42,13 @@ def show_movie_information(movie):
 
     st.markdown(f"🎬**Director:** {director}")
     
-    col3, col4 = st.columns(2)
-    with col3:
+    col1, col2 = st.columns(2)
+    
+    with col1:
         st.markdown("**Cast**")
         get_cast(credits)
         
-    with col4:
+    with col2:
         st.markdown("**Categories**")
         id_list = string_to_list(movie['genre_ids'])
         name_categories = get_category_names(id_list, engine)
