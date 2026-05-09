@@ -18,13 +18,12 @@ release_years = slide_years(df_movies)
 selected_languages = multiselect_languages(engine)
 order_by = segmented_control_order()
 
-PAGE_SIZE = 12
-
 if "page" not in st.session_state:
         st.session_state.page = 1
         
 if categoria_seleccionada:
-          
+    PAGE_SIZE = 12
+    
     id_selected_category = str(categoria_seleccionada['id'])
     
     df_movies = get_movies_by_filter(
