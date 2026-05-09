@@ -37,8 +37,7 @@ if categoria_seleccionada:
         
     if not df_movies.empty:
         movie_container(df_movies)
+        page_bottoms(total_pages)
     
-    page_bottoms(total_pages)
-    
-    page_footer()
+page_footer()
 

@@ -38,7 +38,6 @@ def get_movies_by_filter(category,
 
     return pd.read_sql(text(query), engine, params=params)
 
-
 def count_movies_by_filter(category, min_year, engine, languages=None):
     query = """
         SELECT COUNT(*)
@@ -53,7 +52,6 @@ def count_movies_by_filter(category, min_year, engine, languages=None):
         params["languages"] = tuple(languages)
 
     return pd.read_sql(text(query), engine, params=params).iloc[0, 0]
-
 
 def get_category_names(category_ids, engine):
     query = text("""
@@ -91,8 +89,7 @@ def get_director(credicts):
     )
     
     return director
-    
-    
+       
 def get_cast(credicts):
     cast = credicts['cast']
     
