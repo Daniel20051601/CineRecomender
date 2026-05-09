@@ -1,5 +1,6 @@
 import pandas as pd
 from sqlalchemy import text
+import streamlit as st
 
 def get_older_year(df):
     years = df['release_date'].dropna().apply(lambda x: x.year)
@@ -79,4 +80,25 @@ def get_language_codes(engine):
     list_languages = df_languages['original_language'].tolist()
     
     return list_languages
+
+def get_director(credicts):
+    
+    crew = credicts['crew']
+    
+    director = next(
+        (person['name'] for person in crew if person['job'] == 'Director'),
+        None
+    )
+    
+    return director
+    
+    
+def get_cast(credicts):
+    cast = credicts['cast']
+    
+    top_cast = [actor['name'] for actor in cast[:5]]
+    
+    badges = " ".join([f":blue-badge[{actor}]" for actor in top_cast])
+
+    return st.markdown(badges)
     

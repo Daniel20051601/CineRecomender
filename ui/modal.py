@@ -1,6 +1,6 @@
 import streamlit as st
 from services.tmdb_services import get_movie_details, get_movie_credits
-from services.movies_service import string_to_list, get_category_names
+from services.movies_service import string_to_list, get_category_names, get_director, get_cast
 from database.connection import get_engine
 
 engine = get_engine()
@@ -59,25 +59,5 @@ def show_movie_information(movie):
         st.markdown(f":green-badge[**Revenue:**] {movie_details['revenue']:,} ")
     
 
-# TODO Sacar estas dos funciones ya que este folder es para UI y esto debe ir en el servicio de peliculas
-def get_director(credicts):
-    
-    crew = credicts['crew']
-    
-    director = next(
-        (person['name'] for person in crew if person['job'] == 'Director'),
-        None
-    )
-    
-    return director
-    
-    
-def get_cast(credicts):
-    cast = credicts['cast']
-    
-    top_cast = [actor['name'] for actor in cast[:5]]
-    
-    badges = " ".join([f":blue-badge[{actor}]" for actor in top_cast])
 
-    return st.markdown(badges)
     
