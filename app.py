@@ -8,6 +8,11 @@ from ui.footer import page_footer
 from ui.page_bottoms import page_bottoms
 import math
 
+st.set_page_config(
+    page_title="Cine Recommender",
+    page_icon=":clapper:"
+)
+
 df_movies = get_movies()
 engine = get_engine()
 
