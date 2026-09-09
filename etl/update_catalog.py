@@ -29,7 +29,11 @@ def update_catalog():
     print("Insertando nuevas películas...")
 
     with engine.begin() as conn:
-
+        conn.execute(text("""
+            CREATE UNIQUE INDEX IF NOT EXISTS movies_id_unique_idx
+            ON movies (id)
+            """
+        ))
         for _, row in df_movies.iterrows():
 
             query = text("""
